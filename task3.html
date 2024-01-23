@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Populate JSON Data</title>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      td,
+      th {
+        border: 1px solid;
+        padding: 4px;
+      }
+      input {
+        border: none;
+        outline: none;
+        width: 50px;
+        border-bottom: 1px solid;
+      }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Euro Exchange Rates on 6th March 2022</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Currency</th>
+          <th>Euro</th>
+          <th>Exchange Rate</th>
+          <th>You'll get</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <script>
+      const data = [
+        {
+          datasetid: "euro-exchange-rates",
+          recordid: "43f5940bfd6881b2f8e0c434a3a96f229a8a1054",
+          fields: {
+            date: "2022-03-06",
+            currency: "USD",
+            rate: 1.0929,
+          },
+        },
+        {
+          datasetid: "euro-exchange-rates",
+          recordid: "1787f87bcf029a223e001d6f88750fe0ca6772d1",
+          fields: {
+            date: "2022-03-06",
+            currency: "AUD",
+            rate: 1.4872,
+          },
+        },
+        {
+          datasetid: "euro-exchange-rates",
+          recordid: "756f0f685431156ad1d3bc24b91d574c5a6f00fa",
+          fields: {
+            date: "2022-03-06",
+            currency: "CAD",
+            rate: 1.3937,
+          },
+        },
+        {
+          datasetid: "euro-exchange-rates",
+          recordid: "58e15a0abb6fc40d08a10ae0f58fc2c9525b267a",
+          fields: {
+            date: "2022-03-06",
+            currency: "GBP",
+            rate: 0.8238800000000001,
+          },
+        },
+        {
+          datasetid: "euro-exchange-rates",
+          recordid: "4f7879e2c8e97bc11ae065f748a2e13f2cd73c71",
+          fields: {
+            date: "2022-03-06",
+            currency: "SEK",
+            rate: 10.7935,
+          },
+        },
+        {
+          datasetid: "euro-exchange-rates",
+          recordid: "e3f948548d1479dff8b10aeaaf0c247e17b70897",
+          fields: {
+            date: "2022-03-06",
+            currency: "MXN",
+            rate: 22.7543,
+          },
+        },
+      ];
+
+      function handleInput(event) {
+        const total = document.getElementById(this.recordid);
+        total.innerHTML = (
+          event.target.value * this.fields.rate
+        ).toLocaleString("en", {
+          style: "currency",
+          currency: this.fields.currency,
+        });
+      }
+
+      const tbody = document.querySelector("tbody");
+      for (let item of data) {
+        const tr = document.createElement("tr");
+
+        // Currency cell
+        const currency = document.createElement("td");
+        currency.innerHTML = item.fields.currency;
+        tr.appendChild(currency);
+
+        // Euro cell
+        const euro = document.createElement("td");
+        const input = document.createElement("input");
+        input.type = "number";
+        input.value = 1;
+        input.addEventListener("keyup", handleInput.bind(item));
+        euro.appendChild(input);
+        tr.appendChild(euro);
+
+        // Exchange rate cell
+        const rate = document.createElement("td");
+        rate.innerHTML = item.fields.rate.toLocaleString("en", {
+          style: "currency",
+          currency: item.fields.currency,
+        });
+        tr.appendChild(rate);
+
+        // You'll get
+        const total = document.createElement("td");
+        total.id = item.recordid;
+        total.innerHTML = item.fields.rate.toLocaleString("en", {
+          style: "currency",
+          currency: item.fields.currency,
+        });
+        tr.appendChild(total);
+
+        tbody.appendChild(tr);
+      }
+    </script>
+  </body>
+</html>
